@@ -16,6 +16,7 @@ def add_task():
         tkinter.messagebox.showwarning(title="Error", message="Enter a task first")
 
 
+# Deletes selected task
 def delete_task():
     try:
         task_index = tasks_listbox.curselection()[0]
@@ -24,12 +25,19 @@ def delete_task():
         tkinter.messagebox.showwarning(title="Error", message="Select a task first")
 
 
+# Loads tasks that are saved in tasks.dat
+# Deletes previous tasks in the listbox so it doesn't load on top of them
 def load_tasks():
-    tasks = pickle.load(open("tasks.dat", "rb"))
-    for task in tasks:
-        tasks_listbox.insert(tkinter.END, task)
+    try:
+        tasks = pickle.load(open("tasks.dat", "rb"))
+        tasks_listbox.delete(0, tkinter.END)
+        for task in tasks:
+            tasks_listbox.insert(tkinter.END, task)
+    except:
+        tkinter.messagebox.showwarning(title="Error", message="Save a task list first")
 
 
+# Saves tasks to tasks.dat
 def save_tasks():
     tasks = tasks_listbox.get(0, tasks_listbox.size())
     pickle.dump(tasks, open("tasks.dat", "wb"))
