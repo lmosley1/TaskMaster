@@ -54,7 +54,7 @@ title_text.config(font=("Helvetica", 30))
 tasks_frame = tkinter.Frame(root)
 tasks_frame.pack()
 
-tasks_listbox = tkinter.Listbox(tasks_frame, height=20, width=50)
+tasks_listbox = tkinter.Listbox(tasks_frame, height=10, width=50)
 tasks_listbox.pack(side=tkinter.LEFT)
 
 tasks_scrollbar = tkinter.Scrollbar(tasks_frame)
@@ -67,6 +67,7 @@ tasks_scrollbar.config(command=tasks_listbox.yview)
 task_entry = tkinter.Entry(root, width=50)
 task_entry.pack()
 
+# Adds the buttons to the GUI with their functions
 add_task_button = tkinter.Button(root, text="Add task", width=48, command=add_task)
 add_task_button.pack()
 
