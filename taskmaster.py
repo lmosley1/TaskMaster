@@ -16,6 +16,7 @@ def add_task():
         tasks_listbox.insert(tkinter.END, task)
         task_entry.delete(0, tkinter.END)
     else:
+        # If the user hasn't entered a task, it shows a warning
         tkinter.messagebox.showwarning(title="Error", message="Enter a task first")
 
 
@@ -25,6 +26,7 @@ def delete_task():
         task_index = tasks_listbox.curselection()[0]
         tasks_listbox.delete(task_index)
     except IndexError:
+        # If the user hasn't selected a task before deleting, it shows a warning
         tkinter.messagebox.showwarning(title="Error", message="Select a task first")
 
 
@@ -38,20 +40,31 @@ def load_tasks():
         for task in tasks:
             tasks_listbox.insert(tkinter.END, task)
     except FileNotFoundError:
+        # If a data file cannot be found in the directory
+        # the user will be told to save a list
         tkinter.messagebox.showwarning(title="Error", message="Save a task list first")
 
 
 def save_tasks():
     """Saves tasks to tasks.dat"""
-    tasks = tasks_listbox.get(0, tasks_listbox.size())
-    pickle.dump(tasks, open("tasks.dat", "wb"))
+    end_index = tasks_listbox.index("end")
+    if end_index == 0:
+        tkinter.messagebox.showwarning(title="Error", message="Enter some tasks first")
+    else:
+        tasks = tasks_listbox.get(0, tasks_listbox.size())
+        pickle.dump(tasks, open("tasks.dat", "wb"))
 
 
 # GUI
 
+
 title_text = tkinter.Label(root, text="TaskMaster")
 title_text.pack()
 title_text.config(font=("Helvetica", 30), foreground="lime")
+
+
+buttons_frame = tkinter.Frame(root)
+buttons_frame.pack()
 
 # Makes a frame to put the listbox and scrollbar together
 tasks_frame = tkinter.Frame(root)
@@ -73,45 +86,45 @@ task_entry.pack()
 
 
 # Adds the buttons to the GUI with their functions
+add_icon = tkinter.PhotoImage(file="icons/icons8-add-24.png")
 add_task_button = tkinter.Button(
-    root,
+    buttons_frame,
+    image=add_icon,
     text="Add task",
-    highlightbackground="black",
-    fg="lime",
-    width=48,
+    compound=tkinter.LEFT,
     command=add_task,
 )
-add_task_button.pack()
+add_task_button.pack(side=tkinter.LEFT, ipadx=5, ipady=5)
 
+delete_icon = tkinter.PhotoImage(file="icons/icons8-clear-symbol-24.png")
 delete_task_button = tkinter.Button(
-    root,
+    buttons_frame,
+    image=delete_icon,
     text="Delete task",
-    highlightbackground="black",
-    fg="lime",
-    width=48,
+    compound=tkinter.LEFT,
     command=delete_task,
 )
-delete_task_button.pack()
+delete_task_button.pack(side=tkinter.LEFT, ipadx=5, ipady=5)
 
+load_icon = tkinter.PhotoImage(file="icons/icons8-download-24.png")
 load_tasks_button = tkinter.Button(
-    root,
+    buttons_frame,
+    image=load_icon,
     text="Load tasks",
-    highlightbackground="black",
-    fg="lime",
-    width=48,
+    compound=tkinter.LEFT,
     command=load_tasks,
 )
-load_tasks_button.pack()
+load_tasks_button.pack(side=tkinter.LEFT, ipadx=5, ipady=5)
 
+save_icon = tkinter.PhotoImage(file="icons/icons8-save-24.png")
 save_tasks_button = tkinter.Button(
-    root,
+    buttons_frame,
+    image=save_icon,
     text="Save tasks",
-    highlightbackground="black",
-    fg="lime",
-    width=48,
+    compound=tkinter.LEFT,
     command=save_tasks,
 )
-save_tasks_button.pack()
+save_tasks_button.pack(side=tkinter.LEFT, ipadx=5, ipady=5)
 
 
 # Binds the Enter key to the add_task function
