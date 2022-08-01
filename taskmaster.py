@@ -62,6 +62,13 @@ title_text = tkinter.Label(root, text="TaskMaster")
 title_text.pack()
 title_text.config(font=("Helvetica", 30), foreground="lime")
 
+title_text = tkinter.Label(
+    root,
+    text="Add task - Enter    Delete task - Shift-Delete    Load tasks - Ctrl-O    Save tasks - Ctrl-S",
+)
+title_text.pack()
+title_text.config(font=("Helvetica", 11))
+
 
 buttons_frame = tkinter.Frame(root)
 buttons_frame.pack()
@@ -127,10 +134,16 @@ save_tasks_button = tkinter.Button(
 save_tasks_button.pack(side=tkinter.LEFT, ipadx=5, ipady=5)
 
 
-# Binds the Enter key to the add_task function
+# Binds the Enter key to the add a task
 root.bind("<Return>", (lambda event: add_task()))
 
-# Binds the Delete/Backspace key to the delete_task function
-root.bind("<BackSpace>", (lambda event: delete_task()))
+# Binds Shift-Backspace key to delete the selected task
+root.bind("<Shift-BackSpace>", (lambda event: delete_task()))
+
+# Binds Control-S key to save the tasks
+root.bind("<Control-s>", (lambda event: save_tasks()))
+
+root.bind("<Control-o>", (lambda event: load_tasks()))
+
 
 root.mainloop()
