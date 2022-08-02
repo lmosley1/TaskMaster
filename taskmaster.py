@@ -57,40 +57,37 @@ def save_tasks():
 
 # GUI
 
-
-title_text = tkinter.Label(root, text="TaskMaster")
-title_text.pack()
-title_text.config(font=("Helvetica", 30), foreground="lime")
-
-title_text = tkinter.Label(
-    root,
-    text="Add task - Enter    Delete task - Shift-Delete    Load tasks - Ctrl-O    Save tasks - Ctrl-S",
-)
-title_text.pack()
-title_text.config(font=("Helvetica", 11))
+# Title label
+title_label = tkinter.Label(root, text="TaskMaster")
+title_label.pack()
+title_label.config(font=("Helvetica", 30), foreground="lime")
 
 
+# Creates a frame for the keybind labels
+keybinds_frame = tkinter.Frame(root)
+keybinds_frame.pack()
+
+# Adds in labels which tell the user the keybinds for each button
+add_label = tkinter.Label(keybinds_frame, text="Add task\nEnter")
+add_label.pack(side=tkinter.LEFT, ipadx=25, ipady=5)
+add_label.config(font=("Helvetica", 11))
+
+delete_label = tkinter.Label(keybinds_frame, text="Delete task\nShift-Delete")
+delete_label.pack(side=tkinter.LEFT, ipadx=25, ipady=5)
+delete_label.config(font=("Helvetica", 11))
+
+load_label = tkinter.Label(keybinds_frame, text="Load tasks\nCtrl-O")
+load_label.pack(side=tkinter.LEFT, ipadx=25, ipady=5)
+load_label.config(font=("Helvetica", 11))
+
+save_label = tkinter.Label(keybinds_frame, text="Save tasks\nCtrl-S")
+save_label.pack(side=tkinter.LEFT, ipadx=25, ipady=5)
+save_label.config(font=("Helvetica", 11))
+
+
+# Makes the frame for the buttons
 buttons_frame = tkinter.Frame(root)
 buttons_frame.pack()
-
-# Makes a frame to put the listbox and scrollbar together
-tasks_frame = tkinter.Frame(root)
-tasks_frame.pack()
-
-tasks_listbox = tkinter.Listbox(tasks_frame, height=20, width=50)
-tasks_listbox.pack(side=tkinter.LEFT)
-
-tasks_scrollbar = tkinter.Scrollbar(tasks_frame)
-tasks_scrollbar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
-
-# Lets the listbox be controlled by the scrollbar
-tasks_listbox.config(yscrollcommand=tasks_scrollbar.set)
-tasks_scrollbar.config(command=tasks_listbox.yview)
-
-# Creates an entry box to input the task into
-task_entry = tkinter.Entry(root, width=50)
-task_entry.pack()
-
 
 # Adds the buttons to the GUI with their functions
 add_icon = tkinter.PhotoImage(file="icons/icons8-add-24.png")
@@ -134,15 +131,35 @@ save_tasks_button = tkinter.Button(
 save_tasks_button.pack(side=tkinter.LEFT, ipadx=5, ipady=5)
 
 
+# Makes a frame to put the listbox and scrollbar together
+tasks_frame = tkinter.Frame(root)
+tasks_frame.pack()
+
+tasks_listbox = tkinter.Listbox(tasks_frame, height=20, width=50)
+tasks_listbox.pack(side=tkinter.LEFT)
+
+tasks_scrollbar = tkinter.Scrollbar(tasks_frame)
+tasks_scrollbar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
+
+# Lets the listbox be controlled by the scrollbar
+tasks_listbox.config(yscrollcommand=tasks_scrollbar.set)
+tasks_scrollbar.config(command=tasks_listbox.yview)
+
+# Creates an entry box to input the task into
+task_entry = tkinter.Entry(root, width=50)
+task_entry.pack()
+
+
 # Binds the Enter key to the add a task
 root.bind("<Return>", (lambda event: add_task()))
 
 # Binds Shift-Backspace key to delete the selected task
 root.bind("<Shift-BackSpace>", (lambda event: delete_task()))
 
-# Binds Control-S key to save the tasks
+# Binds Control-S to save the tasks
 root.bind("<Control-s>", (lambda event: save_tasks()))
 
+# Binds Control-O to load saved tasks
 root.bind("<Control-o>", (lambda event: load_tasks()))
 
 
