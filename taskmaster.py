@@ -131,6 +131,10 @@ save_tasks_button = tkinter.Button(
 save_tasks_button.pack(side=tkinter.LEFT, ipadx=5, ipady=5)
 
 
+# Creates an entry box to input the task into
+task_entry = tkinter.Entry(root, width=50)
+task_entry.pack()
+
 # Makes a frame to put the listbox and scrollbar together
 tasks_frame = tkinter.Frame(root)
 tasks_frame.pack()
@@ -144,10 +148,6 @@ tasks_scrollbar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
 # Lets the listbox be controlled by the scrollbar
 tasks_listbox.config(yscrollcommand=tasks_scrollbar.set)
 tasks_scrollbar.config(command=tasks_listbox.yview)
-
-# Creates an entry box to input the task into
-task_entry = tkinter.Entry(root, width=50)
-task_entry.pack()
 
 
 # Binds the Enter key to the add a task
