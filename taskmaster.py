@@ -2,6 +2,7 @@
 import tkinter
 import tkinter.messagebox
 import pickle
+from pathlib import Path
 
 root = tkinter.Tk()
 root.title("TaskMaster")
@@ -161,6 +162,22 @@ root.bind("<Control-s>", (lambda event: save_tasks()))
 
 # Binds Control-O to load saved tasks
 root.bind("<Control-o>", (lambda event: load_tasks()))
+
+
+def on_closing():
+    """Checks whether tasks.dat exists within the directory
+    and if the window is closed without a saved task file
+    it warns the user"""
+    task_file = Path("tasks.dat")
+    if task_file.is_file():
+        root.destroy()
+    elif tkinter.messagebox.askokcancel(
+        "Quit", "Do you want to quit without saving a task list?"
+    ):
+        root.destroy()
+
+
+root.protocol("WM_DELETE_WINDOW", on_closing)
 
 
 root.mainloop()
