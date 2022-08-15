@@ -13,7 +13,11 @@ root.resizable(0, 0)
 def add_task():
     """Adds a task to the listbox from the entry widget"""
     task = task_entry.get()
-    if task != "":
+    if len(task) > 100:
+        tkinter.messagebox.showwarning(
+            title="Error", message="The limit for tasks is 100 characters"
+        )
+    elif task != "":
         tasks_listbox.insert(tkinter.END, task)
         task_entry.delete(0, tkinter.END)
     else:
@@ -172,7 +176,7 @@ def on_closing():
     if task_file.is_file():
         root.destroy()
     elif tkinter.messagebox.askokcancel(
-        "Quit", "Do you want to quit without saving a task list?"
+        "Quit", "You are about to quit without saving a task list"
     ):
         root.destroy()
 
